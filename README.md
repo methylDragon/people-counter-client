@@ -8,7 +8,7 @@ People Counter Framework client scripts for running on client devices.
 
 **Simple (or if you're using one of our client devices)**
 
-1. Fill up the **config.ini** file with the relevant information
+1. Fill up the **people_counter_config.ini** file with the relevant information
 2. Place it in your /boot/ directory
    - If you are using a client device, insert the SD card into your computer and place it in the root of the boot drive
 3. Power your device on and contact our support to see if your device is running as expected

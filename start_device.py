@@ -4,9 +4,9 @@ import time
 while True:
     try:
         try:
-            device = PeopleCounterDevice('/boot/config.ini')
+            device = PeopleCounterDevice('/boot/people_counter_config.ini')
         except:
-            device = PeopleCounterDevice('config.ini')
+            device = PeopleCounterDevice('people_counter_config.ini')
 
         last_send_time = 0
 
