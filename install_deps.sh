@@ -5,6 +5,7 @@ sudo apt-get update
 sudo apt-get install -y libatlas-base-dev
 sudo apt-get install -y build-essential checkinstall cmake pkg-config yasm
 sudo apt-get install -y git gfortran
-sudo apt-get install -y libjpeg8-dev libjasper-dev libpng12-dev
+sudo apt-get install -y libjpeg8-dev libtiff5-dev libjasper-dev libpng12-dev
 sudo apt-get install -y libqtgui4
 sudo apt-get install -y libqt4-test
+sudo apt-get install -y libhdf5-serial-dev
