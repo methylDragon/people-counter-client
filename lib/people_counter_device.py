@@ -30,6 +30,8 @@ class PeopleCounterDevice:
         self.parse_config_file(config_file_path)
         self.populate_config_parameters()
 
+        self.first_request = True
+
         # Init client credentials
         self.client_credentials = CloudPasswordLogin(self.login_email, self.login_password, self.api_key)
 
@@ -249,7 +251,7 @@ class PeopleCounterDevice:
                     self.prev_frame = self.frame
                     self.prev_frame_gray = self.frame_gray
 
-                    if self.record_latest_image:
+                    if self.record_latest_image or self.first_request:
                         self.latest_image = self.frame
                     else:
                         self.latest_image = self.frame_gray
@@ -304,11 +306,22 @@ class PeopleCounterDevice:
 
                     request_header = str(int(time))
 
-                    request_string = (str(self.client_credentials.uid) + "^^"
-                                      + str(self.device_id) + "^^"
-                                      + str(self.record_latest_image) + "^^"
-                                      + str(self.point_threshold) + "^^"
-                                      + str(self.scaling_percentage))
+                    if self.first_request:
+                        request_string = (str(self.client_credentials.uid) + "^^"
+                                          + str(self.device_id) + "^^"
+                                          + str("True") + "^^"
+                                          + str(self.point_threshold) + "^^"
+                                          + str(self.scaling_percentage))
+
+                        self.first_request = False
+
+                    else:
+                        request_string = (str(self.client_credentials.uid) + "^^"
+                                          + str(self.device_id) + "^^"
+                                          + str(self.record_latest_image) + "^^"
+                                          + str(self.point_threshold) + "^^"
+                                          + str(self.scaling_percentage))
+
 
                     request_dict = {request_header: request_string, 'latest_request_device_id': self.device_id}
 
