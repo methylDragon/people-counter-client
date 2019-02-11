@@ -8,7 +8,7 @@ while True:
         except:
             device = PeopleCounterDevice('people_counter_config.ini')
 
-            time.sleep(1)
+            time.sleep(5)
 
         last_send_time = 0
 
@@ -23,13 +23,13 @@ while True:
                 else:
                     pass
 
-            time.sleep(1)
+            time.sleep(5)
 
     except Exception as e:
         print("\n[ERROR]: Restarting Script")
         device.cap.release()
         print("Error:", e)
-        time.sleep(1)
+        time.sleep(5)
 
         # Uncomment this if you want the script to STOP if there's any error
         #break
