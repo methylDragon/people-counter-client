@@ -8,6 +8,8 @@ while True:
         except:
             device = PeopleCounterDevice('people_counter_config.ini')
 
+            time.sleep(1)
+
         last_send_time = 0
 
         while True:
@@ -20,6 +22,8 @@ while True:
                     device.upload_file_and_send_request()
                 else:
                     pass
+
+            time.sleep(1)
 
     except Exception as e:
         print("\n[ERROR]: Restarting Script")
