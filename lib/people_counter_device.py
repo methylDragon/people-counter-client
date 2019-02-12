@@ -299,9 +299,8 @@ class PeopleCounterDevice:
         """Send a request to a random request queue shard."""
         if self.movement_detected or self.bypass_motion_detection:
             for i in range(2): # Just try twice
-                target_request_queue = random.choice(self.request_queues_list)
-
                 try:
+                    target_request_queue = random.choice(self.request_queues_list)
                     print("\nTARGET:", target_request_queue)
 
                     request_header = str(int(time))
