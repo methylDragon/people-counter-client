@@ -98,7 +98,7 @@ class PeopleCounterDevice:
             try:
                 self.device_doc.set({'device_name': self.device_name,
                                      'last_count_date': None,
-                                     'last_count_time': None,
+                                     'last_count_utc_time': None,
                                      'last_count_unix_time': None,
                                      'people_count': None,
                                      'recorded_image_url': self.recorded_image_url,
