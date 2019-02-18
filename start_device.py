@@ -27,7 +27,12 @@ while True:
 
     except Exception as e:
         print("\n[ERROR]: Restarting Script")
-        device.cap.release()
+
+        try:
+            device.cap.release()
+        except:
+            pass
+
         print("Error:", e)
         time.sleep(5)
 

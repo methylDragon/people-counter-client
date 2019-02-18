@@ -352,6 +352,14 @@ class PeopleCounterDevice:
 
             self.cap = cv.VideoCapture(self.camera_number) # creates the capture object
 
+            if self.cap.read()[0] == False:
+                for i in range(-1, 10):
+                    self.cap = cv.VideoCapture(i)
+
+                    if self.cap.read()[0]:
+                        print("CAMERA ACTIVATED, INDEX:", i)
+                        break
+
             self.cap.set(3, self.camera_width)
             self.cap.set(4, self.camera_height)
 
