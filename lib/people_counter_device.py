@@ -364,6 +364,8 @@ class PeopleCounterDevice:
                     if self.cap.read()[0]:
                         print("CAMERA ACTIVATED, INDEX:", i)
                         break
+            else:
+                print("CAMERA ACTIVATED, INDEX:", 0)
 
             self.cap.set(3, self.camera_width)
             self.cap.set(4, self.camera_height)
