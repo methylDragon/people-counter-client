@@ -262,6 +262,11 @@ class PeopleCounterDevice:
                 self.camera_avail = False
                 self.movement_detected = False
 
+                try:
+                    self.init_opencv()
+                except:
+                    pass
+
                 print('[WARN]: Unable to get image from camera')
 
         else:
