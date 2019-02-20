@@ -44,6 +44,10 @@ class PeopleCounterDevice:
         self.prev_frame_gray = np.zeros((self.camera_height, self.camera_width), np.uint8)
         self.movement_detected = False
 
+        for i in range(self.times_to_rotate_by_90_degrees):
+            self.prev_frame = np.rot90(self.prev_frame)
+            self.prev_frame_gray = np.rot90(self.prev_frame_gray)
+
         self.latest_image = np.zeros((self.camera_height, self.camera_width), np.uint8)
 
         # Init URLs
@@ -133,6 +137,7 @@ class PeopleCounterDevice:
         self.camera_height = []
         self.camera_width = []
         self.camera_number = []
+        self.times_to_rotate_by_90_degrees = []
         self.bypass_motion_detection = []
 
         # Define parameter constraints
@@ -159,6 +164,9 @@ class PeopleCounterDevice:
 
                                {'parameter': self.camera_number, 'id': 'CAMERA_NUMBER',
                                 'lower_limit': 0, 'upper_limit': None, 'default': 0},
+
+                               {'parameter': self.times_to_rotate_by_90_degrees, 'id': 'TIMES_TO_ROTATE_BY_90_DEGREES',
+                                'lower_limit': 0, 'upper_limit': 3, 'default': 0},
 
                                {'parameter': self.bypass_motion_detection, 'id': 'BYPASS_MOTION_DETECTION',
                                 'lower_limit': None, 'upper_limit': None, 'default': False}]
@@ -216,13 +224,14 @@ class PeopleCounterDevice:
 
         # Bake in mutable variables
         self.record_latest_image = self.record_latest_image[0]
-        self.point_threshold = self.point_threshold[0]
-        self.scaling_percentage = self.scaling_percentage[0]
-        self.request_frequency = self.request_frequency[0]
+        self.point_threshold = int(self.point_threshold[0])
+        self.scaling_percentage = int(self.scaling_percentage[0])
+        self.request_frequency = int(self.request_frequency[0])
         self.motion_sensitivity_threshold = self.motion_sensitivity_threshold[0]
-        self.camera_height = self.camera_height[0]
-        self.camera_width = self.camera_width[0]
-        self.camera_number = self.camera_number[0]
+        self.camera_height = int(self.camera_height[0])
+        self.camera_width = int(self.camera_width[0])
+        self.camera_number = int(self.camera_number[0])
+        self.times_to_rotate_by_90_degrees = int(self.times_to_rotate_by_90_degrees[0])
         self.bypass_motion_detection = self.bypass_motion_detection[0]
 
     def fetch_request_queues(self):
@@ -242,6 +251,10 @@ class PeopleCounterDevice:
                 self.ret, self.frame = self.cap.read()
 
             self.ret, self.frame = self.cap.read()
+
+            for i in range(self.times_to_rotate_by_90_degrees):
+                self.frame = np.rot90(self.frame)
+
             self.frame_gray = cv.cvtColor(self.frame, cv.COLOR_BGR2GRAY)
 
             if self.ret:
@@ -382,6 +395,9 @@ class PeopleCounterDevice:
                 self.camera_avail = True # Sets the availability of the camera to True
 
                 self.ret, self.frame = self.cap.read() # Reads from the capture object
+
+                for i in range(self.times_to_rotate_by_90_degrees):
+                    self.frame = np.rot90(self.frame)
 
                 if self.ret:
                     self.frame_gray = cv.cvtColor(self.frame, cv.COLOR_BGR2GRAY)
