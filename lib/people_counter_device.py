@@ -23,6 +23,7 @@ import configparser
 import random
 import numpy as np
 import time
+import socket
 
 # Initializes the device class
 class PeopleCounterDevice:
@@ -93,10 +94,20 @@ class PeopleCounterDevice:
 
         # Initialise the device on Firestore
         try: # Tries to update the device
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                s.connect(("8.8.8.8", 80))
+                ip = s.getsockname()[0]
+            except:
+                ip = None
+
             self.device_doc.update({'device_name': self.device_name,
                                     'recorded_image_url': self.recorded_image_url,
                                     'inference_image_url': self.inference_image_url,
-                                    'client_name': self.client_name})
+                                    'client_name': self.client_name,
+                                    'device_ip': ip})
+
+            s.close()
 
         except: # If the device document does not exist then create the device document
             try:
