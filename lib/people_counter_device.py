@@ -364,7 +364,10 @@ class PeopleCounterDevice:
                     break
 
                 except Exception as e:
-                    print("\n[ERROR] Unable to send request to", str(target_request_queue))
+                    try:
+                        print("\n[ERROR] Unable to send request to", str(target_request_queue))
+                    except:
+                        print("\n[ERROR] Unable to send request! Could not assign target request queue.")
                     print("Error:", e)
                     print("Aborting")
                     self.fetch_request_queues()
